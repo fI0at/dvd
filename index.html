@@ -27,17 +27,39 @@
         let dx = speed;
         let dy = speed;
 
+        function changeColor() {
+            // Change the source to simulate a color or logo change
+            const colors = ["img/dvd_red.svg", "img/dvd_green.svg", "img/dvd_blue.svg"];
+            const currentSrc = dvd.src;
+            let newSrc;
+            do {
+                newSrc = colors[Math.floor(Math.random() * colors.length)];
+            } while (newSrc === currentSrc);
+
+            dvd.src = newSrc;
+        }
+
         function animate() {
             x += dx;
             y += dy;
 
-            if (x + dvd.width >= window.innerWidth || x <= 0) dx *= -1;
-            if (y + dvd.height >= window.innerHeight || y <= 0) dy *= -1;
+            // Check for collisions
+            const hitHorizontal = x + dvd.width >= window.innerWidth || x <= 0;
+            const hitVertical = y + dvd.height >= window.innerHeight || y <= 0;
+
+            if (hitHorizontal) dx *= -1;
+            if (hitVertical) dy *= -1;
+
+            // If it hits a corner
+            if (hitHorizontal && hitVertical) {
+                changeColor();
+            }
 
             dvd.style.left = `${x}px`;
             dvd.style.top = `${y}px`;
             requestAnimationFrame(animate);
         }
+
         animate();
     </script>
 </body>
