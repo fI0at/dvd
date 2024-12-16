@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVD Twitch Browser Source</title>
+    <style>
+        body {
+            margin: 0;
+            background: transparent;
+            overflow: hidden;
+        }
+        #dvd {
+            position: absolute;
+            width: auto;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <img id="dvd" src="img/dvd.svg" alt="DVD Logo">
+    <script>
+        const dvd = document.getElementById('dvd');
+        const speed = 3;
+        let x = Math.random() * window.innerWidth;
+        let y = Math.random() * window.innerHeight;
+        let dx = speed;
+        let dy = speed;
+
+        function animate() {
+            x += dx;
+            y += dy;
+
+            if (x + dvd.width >= window.innerWidth || x <= 0) dx *= -1;
+            if (y + dvd.height >= window.innerHeight || y <= 0) dy *= -1;
+
+            dvd.style.left = `${x}px`;
+            dvd.style.top = `${y}px`;
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
